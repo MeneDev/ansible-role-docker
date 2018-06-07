@@ -1,0 +1,30 @@
+---
+- name: Install Docker
+  become: yes
+  package: 
+    name: docker
+    state: present
+
+- name: Ensure docker group present
+  group:
+    name: docker
+    state: present
+    system: yes
+
+- name: Ensure users is member of docker group
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+
+- name: Ensure Docker daemon is running
+  become: yes
+  service:
+    name: docker
+    state: started
+
+- name: Try to refresh groups
+  shell: newgrp docker
+  ignore_errors: True
+  changed_when: False
