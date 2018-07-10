@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Michael Arndt
+  description: Installs modern Docker (docker-ce) according to official documentation https://docs.docker.com/install/linux/docker-ce/fedora/
+  license: Apache
+
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: Fedora
+    versions:
+    - all
+
+  galaxy_tags: []
+
+dependencies: []

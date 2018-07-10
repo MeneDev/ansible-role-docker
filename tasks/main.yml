@@ -1,11 +1,32 @@
 ---
+- name: Remove legacy Docker packages
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: removed
+  with_items:
+    - docker
+    - docker-client
+    - docker-client-latest
+    - docker-common
+    - docker-latest
+    - docker-latest-logrotate
+    - docker-logrotate
+    - docker-selinux
+    - docker-engine-selinux
+    - docker-engine
+
+- name: Add official docker-ce repository
+  become: yes
+  shell: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
 - name: Install Docker
   become: yes
   package: 
-    name: docker
+    name: docker-ce
     state: present
 
-- name: Ensure docker group present
+- name: Ensure docker group is present
   group:
     name: docker
     state: present
